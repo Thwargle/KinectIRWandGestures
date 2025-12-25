@@ -1,22 +1,22 @@
-# Kinect IR Wand Gestures - Harry Potter Spell Recognition
+# Kinect IR Wand Gestures - Spell Recognition
 
-A Windows application that uses a Microsoft Kinect sensor and an IR-tipped wand to record and recognize Harry Potter spells through gesture recognition. The system tracks wand movements in real-time and matches them against a library of spell templates using the $1 Gesture Recognizer algorithm.
+A Windows application that uses a Microsoft Kinect sensor and an IR-tipped wand to record and recognize spells through gesture recognition. The system tracks wand movements in real-time and matches them against a library of spell templates using the $1 Gesture Recognizer algorithm.
 
 ## Overview
 
-This project enables users to cast spells from the Harry Potter universe by drawing gesture patterns in the air with an IR-emitting wand. The Kinect sensor tracks the wand's infrared signature, maps it to the color camera view, and recognizes the drawn patterns as specific spells.
+This project enables users to cast spells by drawing gesture patterns in the air with an IR-emitting wand. The Kinect sensor tracks the wand's infrared signature, maps it to the color camera view, and recognizes the drawn patterns as specific spells.
 
 ## Features
 
 - **Real-time Wand Tracking**: Tracks an IR-emitting wand tip using the Kinect's infrared sensor
-- **Spell Recognition**: Recognizes drawn gestures as Harry Potter spells using the $1 Gesture Recognizer algorithm
+- **Spell Recognition**: Recognizes drawn gestures as spells using the $1 Gesture Recognizer algorithm
 - **Spell Recording**: Record custom spell templates by drawing gestures with your wand
 - **Template Management**: Save and reload spell templates to/from JSON files
 - **Visual Feedback**: 
   - Live color camera feed with wand position overlay (red dot)
   - Real-time drawing of wand path (green line)
   - Spell preview legend showing all available spells
-- **Default Spell Library**: Includes 40+ pre-configured Harry Potter spells
+- **Default Spell Library**: Includes 40+ pre-configured spells
 - **Automatic Recognition**: Auto-recognizes spells when gestures are completed
 - **Stroke Cleanup**: Filters noise and invalid segments from wand tracking data
 
