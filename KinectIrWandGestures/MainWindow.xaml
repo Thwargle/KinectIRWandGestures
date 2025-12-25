@@ -1,0 +1,176 @@
+<Window x:Class="KinectIrWandGestures.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kinect IR Wand Spells" Height="860" Width="1280"
+        Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.ColumnSpan="2"
+           VerticalAlignment="Center"
+           Margin="0,0,0,10"
+           ItemHeight="32">
+
+            <!-- IR threshold -->
+            <TextBlock Text="IR Threshold:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <Slider x:Name="ThresholdSlider"
+            Minimum="0"
+            Maximum="65535"
+            Value="50000"
+            Width="220"
+            Margin="0,0,6,0"/>
+            <TextBlock x:Name="ThresholdValue"
+               Text="50000"
+               VerticalAlignment="Center"
+               Margin="0,0,16,0"/>
+
+            <!-- General controls -->
+            <Button Content="Clear"
+            Click="Clear_Click"
+            Width="90"
+            Margin="0,0,8,0"/>
+
+            <Button Content="Force Recognize"
+            Click="ForceRecognize_Click"
+            Width="140"
+            Margin="0,0,12,0"/>
+
+            <!-- Spell name -->
+            <TextBlock Text="Spell name:"
+               VerticalAlignment="Center"
+               Margin="0,0,8,0"/>
+
+            <TextBox x:Name="SpellNameBox"
+             Width="180"
+             Margin="0,0,12,0"/>
+
+            <!-- Recording workflow -->
+            <Button x:Name="ArmRecordBtn"
+            Content="Arm Record"
+            Click="ArmRecord_Click"
+            Width="110"
+            Margin="0,0,6,0"/>
+
+            <Button x:Name="StartRecordBtn"
+            Content="Start"
+            Click="StartRecord_Click"
+            Width="80"
+            Margin="0,0,6,0"
+            IsEnabled="False"/>
+
+            <Button x:Name="StopRecordBtn"
+            Content="Stop"
+            Click="StopRecord_Click"
+            Width="80"
+            Margin="0,0,12,0"
+            IsEnabled="False"/>
+
+            <!-- Template persistence -->
+            <Button Content="Save Templates"
+            Click="SaveTemplates_Click"
+            Width="120"
+            Margin="0,0,6,0"/>
+
+            <Button Content="Reload Templates"
+            Click="ReloadTemplates_Click"
+            Width="130"
+            Margin="0,0,16,0"/>
+
+            <!-- Sensor status -->
+            <TextBlock Text="Sensor:"
+               VerticalAlignment="Center"
+               Margin="0,0,6,0"/>
+
+            <Ellipse x:Name="SensorDot"
+             Width="14"
+             Height="14"
+             VerticalAlignment="Center"
+             Margin="0,0,6,0"/>
+
+            <TextBlock x:Name="SensorStateText"
+               VerticalAlignment="Center"
+               Margin="0,0,16,0"/>
+
+            <!-- Status -->
+            <TextBlock x:Name="StatusText"
+               VerticalAlignment="Center"
+               FontWeight="SemiBold"/>
+        </WrapPanel>
+
+        <Border Grid.Row="1" Grid.Column="0" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,0,10,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Viewport (tracked wand path)" FontWeight="Bold" Margin="0,0,0,8"/>
+                <Grid Grid.Row="1">
+                    <Image x:Name="CameraImage" Stretch="Uniform" SnapsToDevicePixels="True"/>
+                    <!-- Overlay -->
+                    <Canvas x:Name="DrawCanvas" Background="Transparent" IsHitTestVisible="False" ClipToBounds="True"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Log" FontWeight="Bold" Margin="0,0,0,8"/>
+                <TextBox x:Name="LogBox" Grid.Row="1" Background="#0b0b0b" Foreground="#eaeaea"
+                         FontFamily="Consolas" FontSize="12" IsReadOnly="True"
+                         VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+                <TextBlock Text="Available Spells" Grid.Row="2" FontWeight="SemiBold" Margin="0,5,0,6"/>
+                <TextBlock Text="Available Spells" FontWeight="SemiBold" Margin="0,10,0,6"/>
+
+                <ListBox x:Name="SpellListBox" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5 25 5 5">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="92"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Preview box -->
+                                <Border Grid.Column="0"
+                        Width="86" Height="48"
+                        CornerRadius="4"
+                        BorderThickness="1"
+                        BorderBrush="#444"
+                        Background="#111"
+                        Margin="0,0,8,0">
+                                    <Canvas Width="86" Height="48">
+                                        <Polyline Points="{Binding PreviewPoints}"
+                                  Stroke="LightGray"
+                                  StrokeThickness="2"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+                                    </Canvas>
+                                </Border>
+
+                                <!-- Spell name -->
+                                <TextBlock Grid.Column="1"
+                           Text="{Binding Name}"
+                           VerticalAlignment="Center"
+                           Foreground="Black"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
